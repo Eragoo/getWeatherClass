@@ -40,5 +40,7 @@ class Weather{
 
     private function processData(){
         $responce = sendResuest();
+        $format_resp = json_decode($responce);
+        
     }
 }
