@@ -25,9 +25,20 @@ class Weather{
         ];
 
         $url = $this->url . http_build_query($url_data);
+
         return $url;
     }
 
+    private function sendRequest(){
+        $url = build_url();
+        $c = curl_init($url);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+        $responce = curl_exec($c);
 
+        return $responce;
+    }
 
+    private function processData(){
+        $responce = sendResuest();
+    }
 }
