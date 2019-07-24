@@ -2,4 +2,6 @@
 include "Weather.php";
 
 $city = new Weather(49, 32);
-//$city->getWeather();
+$weather = $city->getWeather();
+
+var_dump($weather);

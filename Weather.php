@@ -20,13 +20,12 @@ class Weather{
         $this->build_url();
         $this->sendRequest();
         $this->processData();
+        $this->dataLocalize();
 
     }
 
     public function getWeather() {
-        foreach($this->weather_params as $key->$value){
-            print $key . " : " . $value . "\n"; 
-        }
+        return $this->weather_params;
     }
 
     private function build_url() {
@@ -43,7 +42,7 @@ class Weather{
     }
 
     private function sendRequest() {
-        $c = curl_init($url);
+        $c = curl_init($this->readyUrl);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
         $responce = curl_exec($c);
 
@@ -62,6 +61,15 @@ class Weather{
                                  'pressure' => $pressure,
                                  'wind_speed' => $wind_speed,
                                  'weather_status' => $weather_status];
+    }
+
+    private function dataLocalize() {
+        define("TEMP_K", "273.15");
+        define("SPEED_COEFF", "3.6");
+        
+        $this->weather_params['temp'] = round($this->weather_params['temp'] - TEMP_K);
+        $this->weather_params['pressure'] = round($this->weather_params['pressure']);
+        $this->weather_params['wind_speed'] = round($this->weather_params['wind_speed'] * SPEED_COEFF);
     }
 
 
