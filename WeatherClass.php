@@ -6,26 +6,28 @@ class Weather{
     private $lat;
     private $lon;
     private $url = "api.openweathermap.org/data/2.5/weather?";
-    private $api_key = "";
+    private $api_key = "6a64e91caaef7e9663dc23664065acb4";
 
-    private $responce;
+    private $response;
     private $readyUrl;
 
     private $weather_params = [];
 
-    public function __construct($lat, $lon) {
+    public function __construct($lat=null, $lon=null) {
         $this->lat = $lat;
         $this->lon = $lon;
-
-        $this->build_url();
-        $this->sendRequest();
-        $this->processData();
-        $this->dataLocalize();
-
     }
 
     public function getWeather() {
-        return $this->weather_params;
+        if(is_null($this->lat) && is_null($this->lon)){
+            return 'exepcion';
+        }else{
+            $this->build_url();
+            $this->sendRequest();
+            $this->processData();
+            $this->dataLocalize();
+            return $this->weather_params;
+        }
     }
 
     private function build_url() {
@@ -44,14 +46,14 @@ class Weather{
     private function sendRequest() {
         $c = curl_init($this->readyUrl);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
-        $responce = curl_exec($c);
+        $response = curl_exec($c);
 
-        $this->responce = $responce;
+        $this->response = $response;
         
     }
 
     private function processData() {
-        $format_resp = json_decode($this->responce);
+        $format_resp = json_decode($this->response);
         $temp = $format_resp->main->temp;
         $pressure = $format_resp->main->pressure;
         $wind_speed = $format_resp->wind->speed;
@@ -60,7 +62,8 @@ class Weather{
         $this->weather_params = ['temp' => $temp,
                                  'pressure' => $pressure,
                                  'wind_speed' => $wind_speed,
-                                 'weather_status' => $weather_status];
+                                 'weather_status' => $weather_status,
+                                 'response' => $format_resp ];
     }
 
     private function dataLocalize() {
