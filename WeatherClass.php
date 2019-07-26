@@ -6,7 +6,7 @@ class Weather{
     private $lat;
     private $lon;
     private $url = "api.openweathermap.org/data/2.5/weather?";
-    private $api_key = "6a64e91caaef7e9663dc23664065acb4";
+    private $api_key = api_key;
 
     private $response;
     private $readyUrl;
