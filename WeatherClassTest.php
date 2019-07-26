@@ -16,8 +16,13 @@ class WeatherTest extends \PHPUnit\Framework\TestCase {
         $this->weather = NULL;
     }
 
-    public function testSuccess () {
+    public function testGetWeatherSuccess () {
         $result = $this->weather->getWeather();
-            $this->assertEquals(true, is_array($result));
+        $this->assertEquals(true, is_array($result));
+    }
+
+    public function testGetWeatherException () {
+        $result = $this->weather->getWeather();
+        $this->assertEquals(true, is_array($result));
     }
 }

@@ -19,8 +19,9 @@ class Weather{
     }
 
     public function getWeather() {
+      try{
         if(is_null($this->lat) && is_null($this->lon)){
-            //exception
+             throw new Exception('empty params in getWeather() method');
         }else{
             $this->build_url();
             $this->sendRequest();
@@ -28,6 +29,9 @@ class Weather{
             $this->dataLocalize();
             return $this->weather_params;
         }
+      }catch(Exception $e){
+        return 'exception: ' . $e->getMessage() . '. On line: ' . $e->getLine();
+      }
     }
 
     private function build_url() {
@@ -49,9 +53,9 @@ class Weather{
         $response = curl_exec($c);
         $info = curl_getinfo($c);
         if($response == false){
-            //exception
+            throw new Exception('get request hasnt sended: incorrect URL');
         }elseif($info['http_code'] >= 400 ){
-            //exception
+            throw new Exception('http-code >= 400');
         }else{
             $this->response = $response;
         }
