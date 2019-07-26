@@ -20,7 +20,7 @@ class Weather{
 
     public function getWeather() {
         if(is_null($this->lat) && is_null($this->lon)){
-            return 'exepcion';
+            //exception
         }else{
             $this->build_url();
             $this->sendRequest();
@@ -47,8 +47,14 @@ class Weather{
         $c = curl_init($this->readyUrl);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($c);
-
-        $this->response = $response;
+        $info = curl_getinfo($c);
+        if($response == false){
+            //exception
+        }elseif($info['http_code'] >= 400 ){
+            //exception
+        }else{
+            $this->response = $response;
+        }
         
     }
 
