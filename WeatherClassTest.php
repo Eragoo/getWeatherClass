@@ -23,6 +23,6 @@ class WeatherTest extends \PHPUnit\Framework\TestCase {
 
     public function testGetWeatherException () {
         $result = $this->weather->getWeather();
-        $this->assertEquals(true, is_array($result));
+        $this->assertEquals(true, method_exists($result, 'getMessage'));
     }
 }

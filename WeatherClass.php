@@ -30,7 +30,7 @@ class Weather{
             return $this->weather_params;
         }
       }catch(Exception $e){
-        return 'exception: ' . $e->getMessage() . '. On line: ' . $e->getLine();
+        return  $e; //'exception: ' . $e->getMessage() . '. On line: ' . $e->getLine();
       }
     }
 
